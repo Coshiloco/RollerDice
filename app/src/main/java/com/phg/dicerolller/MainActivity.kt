@@ -1,12 +1,13 @@
 package com.phg.dicerolller
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var rollButton: Button
     private lateinit var resultText: TextView
+    // imagen
+    private lateinit var diceImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,10 +36,10 @@ class MainActivity : AppCompatActivity() {
         * de clase */
         rollButton = findViewById(R.id.roll_button)
         resultText = findViewById(R.id.result_text_number)
+        diceImage = findViewById(R.id.dice_image_dice)
 
         /* Aqui cambiamos la propiedad del texto
         * del Button y del TextView*/
-        rollButton.text = "Let ` s Roll"
         resultText.text = "Roll the dice"
 
         /*Esta funcion es una lambda eso significa
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         * en pantallas y llamamos a la funcion del genrear
         * su numero random que es importante*/
         rollButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Dice Rolled", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this@MainActivity, "Dice Rolled", Toast.LENGTH_SHORT).show()
             showRandomNumber()
         }
     }
@@ -59,8 +62,16 @@ class MainActivity : AppCompatActivity() {
         * de randomNumber que por defecto es el its el resultado del bloque
         * que es nuestro primer parametro que lo que nos genera es el numero
         * random */
-        (Random().nextInt(6) + 1).let { randomNumber ->
-            resultText.text = randomNumber.toString()
+        val randomInt = Random().nextInt(6)+1
+        resultText.text = randomInt.toString()
+        val drawable = when (randomInt) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
         }
+        diceImage.setImageResource(drawable)
     }
 }
